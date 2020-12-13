@@ -1,0 +1,20 @@
+<querymaps>
+<querymap name="test_query">
+<param name="count" type="int"/>
+<query>
+<![CDATA[
+	select * from test_info where count > :count
+]]>
+</query>
+</querymap>
+<querymap name="test_query2">
+<param name="count2" type="int"/>
+<query>
+<![CDATA[
+{
+	select * from test_info where count >= :count2
+}
+]]>
+</query>
+</querymap>
+</querymaps>
