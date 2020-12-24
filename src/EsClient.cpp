@@ -3,54 +3,19 @@
 #include <tinyxml2/tinyxml2.h>
 #include "util/HttpUtil.h"
 #include "util/StringUtil.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/daily_file_sink.h>
 
 using namespace tinyxml2;
 
+std::shared_ptr<spdlog::logger> g_Logger = spdlog::daily_logger_mt("esclient", "logs/esclient.log", 0, 0);
+
 EsClient::EsClient()
-{}
+{
+	g_Logger->set_pattern("%g:%#|%Y-%m-%dT%H:%M:%S|%l|%n|%v|tid:%t");
+	g_Logger->flush_on(spdlog::level::info);
+	printf("EsClient::EsClient()\n");
+}
 
 EsClient::~EsClient()
 {}
-
-void EsClient::test()
-{
-	XMLDocument doc;
-	doc.LoadFile( "test.xml" );
-	XMLElement* rootElement = doc.RootElement();
-	XMLElement* querymapElement = rootElement->FirstChildElement("querymap");
-	while ( querymapElement )
-	{
-		const XMLAttribute *queryNameAttr = querymapElement->FirstAttribute();
-		std::string queryName = "";
-		queryName = queryNameAttr->Value();
-
-		const XMLElement* paramElement = querymapElement->FirstChildElement("param");
-		const XMLAttribute *paramAttr = paramElement->FirstAttribute();
-		std::string strName = "";
-		while ( paramAttr )
-		{
-			printf("param ==> key:%s, value:%s\n", paramAttr->Name(), paramAttr->Value());
-
-			if (strcmp(paramAttr->Name(),"name") == 0)
-			{
-				strName += ":";
-				strName +=  paramAttr->Value();
-			}
-
-			paramAttr = paramAttr->Next();
-		}
-		
-		const XMLElement* queryElement = querymapElement->FirstChildElement("query");
-
-		printf("queryMap:%s\n\n %s \n", queryName.c_str(), queryElement->GetText());
-
-		std::string strQuery = queryElement->GetText();
-		StringUtil stringUtil;
-		std::string result = stringUtil.replaceAll(strQuery, strName.c_str(), "바꾸기완료");
-		
-		printf("queryMap:%s \n", result.c_str());
-
-		querymapElement = querymapElement->NextSiblingElement();
-	}
-}
-

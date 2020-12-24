@@ -41,6 +41,10 @@ bool HttpUtil::sendHttpRequest(const std::string& url, std::string method,
 		{
 			curl_easy_setopt(curlCtx, CURLOPT_CUSTOMREQUEST, "PATCH");
 		}
+		else if ( method == HTTP_PUT_METHOD )
+		{
+			curl_easy_setopt(curlCtx, CURLOPT_CUSTOMREQUEST, "PUT");
+		}
 		else
 		{
 			fprintf(stderr, "not supported method\n");

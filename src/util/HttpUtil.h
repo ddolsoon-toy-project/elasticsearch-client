@@ -9,6 +9,7 @@ const char* const HTTP_GET_METHOD = "GET";
 const char* const HTTP_POST_METHOD = "POST";
 const char* const HTTP_DELETE_METHOD = "DELETE";
 const char* const HTTP_PATCH_METHOD = "PATCH";
+const char* const HTTP_PUT_METHOD = "PUT";
 
 #include <iostream>
 #include <string>
