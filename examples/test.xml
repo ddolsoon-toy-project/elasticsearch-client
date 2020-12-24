@@ -1,19 +1,33 @@
 <querymaps>
-<querymap name="test_query">
-<param name="count" type="int"/>
-<query>
-<![CDATA[
-	select * from test_info where count > :count
-]]>
-</query>
-</querymap>
-<querymap name="test_query2">
-<param name="count2" type="int"/>
+<querymap name="SearchNearestPharmacyFromDistance">
+<param name="distance" type="String"/>
+<param name="latitude" type="Double"/>
+<param name="longitude" type="Double"/>
 <query>
 <![CDATA[
 {
-	select * from test_info where count >= :count2
+  "query": {
+    "geo_distance": {
+      "distance": :distance,
+      "location": {
+        "lat": :latitude,
+        "lon": :longitude
+      }
+    }
+  }
 }
+]]>
+</query>
+</querymap>
+<querymap name="SearchPharmacyByName">
+<param name="name" type="String"/>
+<query>
+<![CDATA[
+{
+  "query" : {
+        "match" : { "name" : :name }
+  }
+} 
 ]]>
 </query>
 </querymap>
