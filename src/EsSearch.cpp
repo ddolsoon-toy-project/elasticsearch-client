@@ -60,6 +60,10 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 	double maxScore = root["hits"]["max_score"].asDouble();
 	std::string hits = root["hits"]["hits"].toStyledString();
 
+	response.errorType = SUCCESS_TYPE;
+	response.errorMessage = SUCCESS;
+	response.statusCode = HTTP_SUCCESS;
+
 	searchResult.totalCount = totalCount;
 	searchResult.maxScore = maxScore;
 	searchResult.hits = hits;

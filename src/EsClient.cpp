@@ -69,40 +69,84 @@ Response EsClient::searchQuery(SearchResult& searchResult,SearchQuery searchQuer
 
 
 // Index API
-Response deleteIndex(std::string index)
+Response EsClient::deleteIndex(std::string index)
 {
 	Response response;
+
+	do
+	{
+		response = _pEsIndex->deleteIndex(index);
+		if ( response.statusCode != 201 || response.statusCode != 200 )
+		{
+			break;
+		}
+
+	} while (false);
+
 
 	return response;
 }
 
-Response createIndex(std::string index, std::string mappings)
+Response EsClient::createIndex(std::string index, std::string mappings)
 {
 	Response response;
+
+	do
+	{
+		response = _pEsIndex->createIndex(index, mappings);
+		if ( response.statusCode != 201 || response.statusCode != 200 )
+		{
+			break;
+		}
+
+	} while (false);
 
 	return response;
 }
 
-Response existsIndex(std::string index)
+Response EsClient::existsIndex(std::string index)
 {
 	Response response;
+
+	do
+	{
+		response = _pEsIndex->existsIndex(index);
+		if ( response.statusCode != 201 || response.statusCode != 200 )
+		{
+			break;
+		}
+
+	} while (false);
 
 	return response;
 }
 
 
 // Doucment API
-Response deleteDocument(std::string index, std::string docId)
+Response EsClient::deleteDocument(std::string index, std::string docId, std::string queryKey)
 {
 	Response response;
 
 	return response;
 }
 
-Response createDocument(std::string index, std::string docId)
+Response EsClient::createDocument(std::string index, std::string docId)
 {
 	Response response;
 
 	return response;
 }
 
+Response EsClient::getDocument(std::string& docResponse, std::string index, std::string docId)
+{
+	Response response;
+
+	return response;
+}
+
+Response EsClient::updateDocument(std::string index, std::string docId, std::string queryKey)
+{
+	Response response;
+
+	return response;
+}

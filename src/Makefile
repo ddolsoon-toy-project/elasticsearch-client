@@ -48,5 +48,13 @@ libEsClient.a: $(OBJS)
 clean:
 	@printf "\033[0;40;33m ****** Make Clean Start    ****** \033[0m\n";
 	rm -f $(TARGET) $(OBJS) *.o *.gcno *.gcda
+	rm -rf build
 	@printf "\033[0;40;33m ****** Make Clean Complete ****** \033[0m\n";
 
+install:
+	mkdir -p build/include/
+	mkdir -p build/lib/
+	@cp -rf *.h build/include/
+	@cp libEsClient.a build/lib/
+	@cp libEsClient.so build/lib/
+	

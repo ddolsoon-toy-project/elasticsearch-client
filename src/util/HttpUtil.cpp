@@ -45,6 +45,10 @@ bool HttpUtil::sendHttpRequest(const std::string& url, std::string method,
 		{
 			curl_easy_setopt(curlCtx, CURLOPT_CUSTOMREQUEST, "PUT");
 		}
+		else if ( method == HTTP_HEAD_METHOD )
+		{
+			curl_easy_setopt(curlCtx, CURLOPT_CUSTOMREQUEST, "HEAD");
+		}
 		else
 		{
 			fprintf(stderr, "not supported method\n");
@@ -78,8 +82,15 @@ bool HttpUtil::sendHttpRequest(const std::string& url, std::string method,
 		}
 
 		// output 세팅
-		curl_easy_setopt(curlCtx, CURLOPT_WRITEFUNCTION, _writeCallback);
-		curl_easy_setopt(curlCtx, CURLOPT_WRITEDATA, &response);
+		if ( method == HTTP_HEAD_METHOD ) // HEAD일경우, body 없음
+		{
+			curl_easy_setopt(curlCtx, CURLOPT_NOBODY, 1);
+		}
+		else
+		{
+			curl_easy_setopt(curlCtx, CURLOPT_WRITEFUNCTION, _writeCallback);
+			curl_easy_setopt(curlCtx, CURLOPT_WRITEDATA, &response);
+		}
 
 		CURLcode res = curl_easy_perform(curlCtx);
 		if ( res != CURLE_OK )
