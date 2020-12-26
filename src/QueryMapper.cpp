@@ -3,14 +3,14 @@
 
 #include "util/HttpUtil.h"
 #include "util/StringUtil.h"
-
 #include "QueryMapper.h"
-#include "EsClient.h"
 
 using namespace tinyxml2;
 
-QueryMapper::QueryMapper()
-{}
+QueryMapper::QueryMapper(std::string queryPath)
+{
+	_queryPath = queryPath;
+}
 
 QueryMapper::~QueryMapper()
 {}
@@ -45,7 +45,7 @@ bool QueryMapper::initialize(std::string queryPath)
 			std::string strType = "";
 			while ( paramAttr )
 			{
-				SPDLOG_LOGGER_INFO(g_Logger, "param ==> key:{}, value:{}", paramAttr->Name(), paramAttr->Value());
+				fprintf(stderr, "param ==> key:%s, value:%s \n", paramAttr->Name(), paramAttr->Value());
 
 				if ( strcmp(paramAttr->Name(),"name") == 0 )
 				{
@@ -75,7 +75,7 @@ bool QueryMapper::initialize(std::string queryPath)
 
 		queryMap[queryName] = query;
 
-		SPDLOG_LOGGER_INFO(g_Logger, "queryMap:{} {}", queryName.c_str(), queryElement->GetText());
+		fprintf(stderr, "queryMap:%s %s\n", queryName.c_str(), queryElement->GetText());
 
 		querymapElement = querymapElement->NextSiblingElement();
 	}
@@ -113,11 +113,11 @@ bool QueryMapper::_bindInputParam(std::string& resultQuery, const std::string& q
 	std::map<std::string, std::string> paramTypeMap;
 	std::string inputQuery;
 
-	SPDLOG_LOGGER_ERROR(g_Logger, "queryMap is size : {}", queryMap.size());
+	fprintf(stderr, "queryMap is size : %ld \n", queryMap.size());
 	queryMapItr = queryMap.find(queryKey);
 	if (  queryMapItr == queryMap.end() )
 	{
-		SPDLOG_LOGGER_ERROR(g_Logger, "{} key is not found from queryMap", queryKey);
+		fprintf(stderr, "%s key is not found from queryMap \n", queryKey.c_str());
 		return false;
 	}
 
@@ -126,7 +126,7 @@ bool QueryMapper::_bindInputParam(std::string& resultQuery, const std::string& q
 
 	std::map<std::string, std::string>::iterator paramTypeMapItr;
 	
-	SPDLOG_LOGGER_INFO(g_Logger, "paramTypeMap is size : {}", paramTypeMap.size());
+	fprintf(stderr, "paramTypeMap is size : %ld \n", paramTypeMap.size());
 	for ( paramTypeMapItr = paramTypeMap.begin(); paramTypeMapItr != paramTypeMap.end(); paramTypeMapItr++ )
 	{
 		std::string paramName = paramTypeMapItr->first;
@@ -142,7 +142,7 @@ bool QueryMapper::_bindInputParam(std::string& resultQuery, const std::string& q
 		// inParamMap에서 xml에 바인딩된 key가 없다면 에러
 		if ( inParamMapItr == inParamMap.end() )
 		{
-			SPDLOG_LOGGER_ERROR(g_Logger, "{} can't be bound to inParamMap.", paramName);
+			fprintf(stderr, "%s can't be bound to inParamMap. \n", paramName.c_str());
 			continue;
 		}
 
@@ -156,7 +156,7 @@ bool QueryMapper::_bindInputParam(std::string& resultQuery, const std::string& q
 				int* pIntParam = boost::get<int>(&inParam);
 				if  ( pIntParam == nullptr )
 				{
-					SPDLOG_LOGGER_ERROR(g_Logger, "{} type mismatch", inParamMapItr->first);
+					fprintf(stderr, "%s type mismatch \n", inParamMapItr->first.c_str());
 					continue;
 				}
 
@@ -168,7 +168,7 @@ bool QueryMapper::_bindInputParam(std::string& resultQuery, const std::string& q
 				std::string* pStrParam = boost::get<std::string>(&inParam);
 				if  ( pStrParam == nullptr )
 				{
-					SPDLOG_LOGGER_ERROR(g_Logger, "{} type mismatch", inParamMapItr->first);
+					fprintf(stderr, "%s type mismatch \n", inParamMapItr->first.c_str());
 					continue;
 				}
 
@@ -183,7 +183,7 @@ bool QueryMapper::_bindInputParam(std::string& resultQuery, const std::string& q
 				double* pDoubleParam = boost::get<double>(&inParam);
 				if  ( pDoubleParam == nullptr )
 				{
-					SPDLOG_LOGGER_ERROR(g_Logger, "{} type mismatch", inParamMapItr->first);
+					fprintf(stderr, "%s type mismatch \n", inParamMapItr->first.c_str());
 					continue;
 				}
 
@@ -193,10 +193,10 @@ bool QueryMapper::_bindInputParam(std::string& resultQuery, const std::string& q
 		}
 		else
 		{
-			SPDLOG_LOGGER_ERROR(g_Logger, "{} type not exists.", paramType);
+			fprintf(stderr, "%s type not exists. \n", paramType.c_str());
 		}
 
-		SPDLOG_LOGGER_INFO(g_Logger, "param : {} , {}", paramTypeMapItr->first, paramTypeMapItr->second);
+		fprintf(stderr, "param : %s %s \n", paramTypeMapItr->first.c_str(), paramTypeMapItr->second.c_str());
 	}
 
 	resultQuery = inputQuery;

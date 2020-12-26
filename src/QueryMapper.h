@@ -13,6 +13,9 @@
 #include <map>
 #include <algorithm>
 #include <boost/variant.hpp>
+#include <boost/format.hpp>
+
+#include "Response.h"
 
 const char* const INPUT_INT_TYPE = "INT";
 const char* const INPUT_STRING_TYPE = "STRING";
@@ -27,7 +30,7 @@ typedef struct _Query
 class QueryMapper 
 {
     public:
-        QueryMapper();
+        QueryMapper(std::string queryPath);
         ~QueryMapper();
 
 		/**
@@ -47,8 +50,6 @@ class QueryMapper
 				std::map<std::string, boost::variant<int, double, std::string>>& inParamMap);
 
 	private:
-		std::string _host;
-		int32_t _port;
 		std::string _queryPath;
 
 	private:

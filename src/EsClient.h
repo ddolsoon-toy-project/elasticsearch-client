@@ -8,21 +8,35 @@
 
 #include <iostream>
 #include <cstring>
+#include <cstdio>
 #include <string>
-#include <spdlog/spdlog.h>
 
 #include "QueryMapper.h"
+#include "Response.h"
 #include "EsSearch.h"
-
-extern std::shared_ptr<spdlog::logger> g_Logger;
+#include "EsIndex.h"
+#include "EsDocument.h"
 
 class EsClient 
 {
     public:
-        EsClient();
+        EsClient(std::string host, int port, int timeout, std::string queryPath);
         ~EsClient();
 
 	public:
+		// Search API
+		Response searchQuery(SearchResult& searchResult, std::string index, std::string query,
+				std::map<std::string, boost::variant<int, double, std::string>>& inputParamMap);
+		Response searchQuery(SearchResult& searchResult, SearchQuery searchQuery);
+
+		// Index API
+		Response deleteIndex(std::string index);
+		Response createIndex(std::string index, std::string mappings);
+		Response existsIndex(std::string index);
+
+		// Doucment API
+		Response deleteDocument(std::string index, std::string docId);
+		Response createDocument(std::string index, std::string docId);
 
 	private:
 		std::string _strHost;
@@ -31,6 +45,8 @@ class EsClient
 
 		QueryMapper* _pQueryMapper;
 		EsSearch* _pEsSearch;
+		EsIndex* _pEsIndex;
+		EsDocument* _pEsDocument;
 };
 
 #endif 

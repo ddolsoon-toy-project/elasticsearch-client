@@ -1,6 +1,6 @@
 CXX=g++
 CXXFLAGS= -fPIC -Wall $(DEFINES)
-LIBS=-lcurl -L../common/lib -ljsoncpp -ltinyxml2 -lspdlog
+LIBS=-lcurl -L../common/lib -ljsoncpp -ltinyxml2 
 INCLUDES=-I../common/include/
 
 LDSO=$(CXX) -shared -rdynamic -fPIC
@@ -8,6 +8,8 @@ LDSO=$(CXX) -shared -rdynamic -fPIC
 SRCS=./EsClient.cpp \
 	 ./QueryMapper.cpp \
 	 ./EsSearch.cpp \
+	 ./EsIndex.cpp \
+	 ./EsDocument.cpp \
 	 ./util/StringUtil.cpp \
 	 ./util/HttpUtil.cpp
 
@@ -39,11 +41,9 @@ libEsClient.so: $(OBJS)
 libEsClient.a: $(OBJS)
 	ar -x ../common/lib/libjsoncpp.a
 	ar -x ../common/lib/libtinyxml2.a
-	ar -x ../common/lib/libspdlog.a
 	ar srcv libEsClient.a *.o util/*.o
 	@cp libEsClient.a ../examples/lib/
-	@cp *.h ../examples/include/
-	@cp -rf ../common/include/spdlog ../examples/include/
+	@cp *.h ../examples/include/elasticsearch
 
 clean:
 	@printf "\033[0;40;33m ****** Make Clean Start    ****** \033[0m\n";
