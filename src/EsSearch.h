@@ -12,6 +12,9 @@
 #include <string>
 #include "Response.h"
 
+namespace es
+{
+
 class EsSearch 
 {
     public:
@@ -26,6 +29,8 @@ class EsSearch
 		int _port;
 		int _timeout;
 };
+
+}
 
 #endif 
 

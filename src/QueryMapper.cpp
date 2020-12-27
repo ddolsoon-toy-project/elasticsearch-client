@@ -6,6 +6,7 @@
 #include "QueryMapper.h"
 
 using namespace tinyxml2;
+using namespace es;
 
 QueryMapper::QueryMapper(std::string queryPath)
 {
@@ -45,7 +46,7 @@ bool QueryMapper::initialize(std::string queryPath)
 			std::string strType = "";
 			while ( paramAttr )
 			{
-				fprintf(stderr, "param ==> key:%s, value:%s \n", paramAttr->Name(), paramAttr->Value());
+				//fprintf(stderr, "param ==> key:%s, value:%s \n", paramAttr->Name(), paramAttr->Value());
 
 				if ( strcmp(paramAttr->Name(),"name") == 0 )
 				{
@@ -75,7 +76,7 @@ bool QueryMapper::initialize(std::string queryPath)
 
 		queryMap[queryName] = query;
 
-		fprintf(stderr, "queryMap:%s %s\n", queryName.c_str(), queryElement->GetText());
+		//fprintf(stderr, "queryMap:%s %s\n", queryName.c_str(), queryElement->GetText());
 
 		querymapElement = querymapElement->NextSiblingElement();
 	}

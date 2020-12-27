@@ -6,6 +6,7 @@
 
 
 using namespace tinyxml2;
+using namespace es;
 
 EsClient::EsClient(std::string host, int port, int timeout, std::string queryPath)
 {
@@ -48,7 +49,6 @@ Response EsClient::searchQuery(SearchResult& searchResult, std::string index, st
 		}
 
 		// Search API 수행
-		SearchResult searchResult;
 		response = _pEsSearch->search(searchResult, index, searchQuery);
 		if ( response.statusCode != 201 || response.statusCode != 200 )
 		{

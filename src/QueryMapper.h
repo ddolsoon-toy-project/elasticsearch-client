@@ -27,6 +27,9 @@ typedef struct _Query
 	std::string queryDsl;
 }Query;
 
+namespace es
+{
+
 class QueryMapper 
 {
     public:
@@ -59,6 +62,8 @@ class QueryMapper
 
 		bool _validateParamType(std::string paramType);
 };
+
+}
 
 #endif 
 

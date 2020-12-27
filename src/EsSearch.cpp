@@ -5,6 +5,7 @@
 #include "util/StringUtil.h"
 
 using namespace tinyxml2;
+using namespace es;
 
 EsSearch::EsSearch(std::string host, int port, int timeout)
 {
@@ -58,7 +59,11 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 
 	int totalCount = root["hits"]["total"]["value"].asInt();
 	double maxScore = root["hits"]["max_score"].asDouble();
-	std::string hits = root["hits"]["hits"].toStyledString();
+
+	Json::StreamWriterBuilder writeBuilder;
+	writeBuilder["indentation"] = "";
+
+	std::string hits = Json::writeString(writeBuilder, root["hits"]["hits"]);
 
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;

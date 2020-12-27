@@ -1,5 +1,7 @@
 #include "StringUtil.h"
 
+using namespace es;
+
 std::string StringUtil::replaceAll(const std::string &message, const std::string &pattern, const std::string &replace) 
 {
 	std::string result = message;

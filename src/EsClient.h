@@ -17,6 +17,9 @@
 #include "EsIndex.h"
 #include "EsDocument.h"
 
+namespace es 
+{
+
 class EsClient 
 {
     public:
@@ -50,6 +53,8 @@ class EsClient
 		EsIndex* _pEsIndex;
 		EsDocument* _pEsDocument;
 };
+
+}
 
 #endif 
 

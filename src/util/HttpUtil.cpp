@@ -1,6 +1,8 @@
 #include "HttpUtil.h"
 #include "json/json.h"
 
+using namespace es;
+
 HttpUtil::HttpUtil()
 {}
 
@@ -73,7 +75,7 @@ bool HttpUtil::sendHttpRequest(const std::string& url, std::string method,
 		}
 
 		// timeout 세팅
-		curl_easy_setopt(curlCtx, CURLOPT_TIMEOUT, timeOut);
+		curl_easy_setopt(curlCtx, CURLOPT_CONNECTTIMEOUT, timeOut);
 
 		// body 세팅 (optional)
 		if ( _requestBody.size() > 0 )

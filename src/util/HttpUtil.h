@@ -2,8 +2,8 @@
 * @file HttpUtil.h
 * @brief HttpUtil Class
 */
-#ifndef __HTTP_CLIENT_H__ 
-#define __HTTP_CLIENT_H__ 
+#ifndef __ELASTICSEARCH_HTTP_CLIENT_H__ 
+#define __ELASTICSEARCH_HTTP_CLIENT_H__ 
 
 const char* const HTTP_GET_METHOD = "GET";
 const char* const HTTP_POST_METHOD = "POST";
@@ -19,6 +19,9 @@ const char* const HTTP_HEAD_METHOD = "HEAD";
 #include <algorithm>
 #include <curl/curl.h>
 #include <cstring>
+
+namespace es
+{
 
 class HttpUtil 
 {
@@ -41,6 +44,8 @@ class HttpUtil
 	private:
 		std::string _requestBody;
 };
+
+}
 
 #endif 
 
