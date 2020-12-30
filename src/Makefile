@@ -6,6 +6,7 @@ INCLUDES=-I../common/include/
 LDSO=$(CXX) -shared -rdynamic -fPIC
 
 SRCS=./EsClient.cpp \
+	 ./EsBulkProcessor.cpp \
 	 ./QueryMapper.cpp \
 	 ./EsSearch.cpp \
 	 ./EsIndex.cpp \
