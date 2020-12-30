@@ -121,32 +121,129 @@ Response EsClient::existsIndex(std::string index)
 	return response;
 }
 
-
 // Doucment API
-Response EsClient::deleteDocument(std::string index, std::string docId, std::string queryKey)
+Response EsClient::deleteDocumentById(std::string index, std::string docId)
 {
 	Response response;
+
+	do
+	{
+		response = _pEsDocument->deleteById(index, docId);
+		if ( response.statusCode != 201 || response.statusCode != 200 )
+		{
+			break;
+		}
+
+	} while (false);
+
 
 	return response;
 }
 
-Response EsClient::createDocument(std::string index, std::string docId)
+Response EsClient::deleteDocumentByQuery(std::string index, std::string queryKey,
+		std::map<std::string, boost::variant<int, double, std::string>>& inputParamMap)
 {
 	Response response;
+
+	do
+	{
+		// QueryMapper로 부터 delete query 가져오기
+		std::string deleteQuery;
+		if ( false == _pQueryMapper->getQuery(deleteQuery, queryKey, inputParamMap) )
+		{
+			response.errorType = QUERY_MAPPER_ERROR_TYPE;
+			response.errorMessage = QUERY_MAPPER_ERROR;
+			response.statusCode = SERVER_INTERNAL_ERROR;
+			break;
+		}
+
+		// Delete API 수행
+		response = _pEsDocument->deleteByQuery(index, deleteQuery);
+		if ( response.statusCode != 201 || response.statusCode != 200 )
+		{
+			break;
+		}
+
+	} while (false);
 
 	return response;
 }
 
-Response EsClient::getDocument(std::string& docResponse, std::string index, std::string docId)
+Response EsClient::createDocument(std::string index, std::string queryKey, 
+		std::map<std::string, boost::variant<int, double, std::string>>& inputParamMap, std::string docId)
 {
 	Response response;
+
+	do
+	{
+		// QueryMapper로 부터 create query 가져오기
+		std::string createQuery;
+		if ( false == _pQueryMapper->getQuery(createQuery, queryKey, inputParamMap) )
+		{
+			response.errorType = QUERY_MAPPER_ERROR_TYPE;
+			response.errorMessage = QUERY_MAPPER_ERROR;
+			response.statusCode = SERVER_INTERNAL_ERROR;
+			break;
+		}
+
+		// Create API 수행
+		response = _pEsDocument->create(index, createQuery, docId);
+		if ( response.statusCode != 201 || response.statusCode != 200 )
+		{
+			break;
+		}
+
+	} while (false);
+
+
+	return response;
+
+}
+
+Response EsClient::updateDocument(std::string index, std::string queryKey, 
+		std::map<std::string, boost::variant<int, double, std::string>>& inputParamMap, std::string docId)
+{
+	Response response;
+
+	do
+	{
+		// QueryMapper로 부터 update query 가져오기
+		std::string updateQuery;
+		if ( false == _pQueryMapper->getQuery(updateQuery, queryKey, inputParamMap) )
+		{
+			response.errorType = QUERY_MAPPER_ERROR_TYPE;
+			response.errorMessage = QUERY_MAPPER_ERROR;
+			response.statusCode = SERVER_INTERNAL_ERROR;
+			break;
+		}
+
+		// Create API 수행
+		response = _pEsDocument->update(index, updateQuery, docId);
+		if ( response.statusCode != 201 || response.statusCode != 200 )
+		{
+			break;
+		}
+
+	} while (false);
 
 	return response;
 }
 
-Response EsClient::updateDocument(std::string index, std::string docId, std::string queryKey)
+Response EsClient::getDocument(DocResult& docResult, std::string index, std::string docId)
 {
 	Response response;
+
+	do
+	{
+		// Search API 수행
+		response = _pEsDocument->get(docResult, index, docId);
+		if ( response.statusCode != 201 || response.statusCode != 200 )
+		{
+			break;
+		}
+
+	} while (false);
+
 
 	return response;
 }

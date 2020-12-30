@@ -104,7 +104,6 @@ bool QueryMapper::_bindInputParam(std::string& resultQuery, const std::string& q
 {
 	// 1.inputParamMap을 순회하면서, queryMap에서 inputTypeMap을 비교한다.
 	// key에 해당하는 type이 나오면 해당 type으로 변환한다.
-	
 	// 2. 변환된 값들에 대해서, query에 바인딩 작업을 한다. (std::string의 경우 "" 로 묶어줌)
 
 	StringUtil stringUtil;

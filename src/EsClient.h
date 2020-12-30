@@ -38,10 +38,14 @@ class EsClient
 		Response existsIndex(std::string index);
 
 		// Doucment API
-		Response deleteDocument(std::string index, std::string docId, std::string queryKey = "");
-		Response createDocument(std::string index, std::string docId);
-		Response getDocument(std::string& docResponse, std::string index, std::string docId);
-		Response updateDocument(std::string index, std::string docId, std::string queryKey = "");
+		Response deleteDocumentById(std::string index, std::string docId);
+		Response deleteDocumentByQuery(std::string index, std::string queryKey,
+				std::map<std::string, boost::variant<int, double, std::string>>& inputParamMap);
+		Response createDocument(std::string index, std::string queryKey,
+				std::map<std::string, boost::variant<int, double, std::string>>& inputParamMap, std::string docId = "");
+		Response updateDocument(std::string index, std::string queryKey, 
+				std::map<std::string, boost::variant<int, double, std::string>>& inputParamMap, std::string docId);
+		Response getDocument(DocResult& docResult, std::string index, std::string docId);
 
 	private:
 		std::string _strHost;

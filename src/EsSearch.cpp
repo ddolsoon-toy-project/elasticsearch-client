@@ -46,16 +46,18 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 
 	Json::Value root;
 	std::string err;
-	if ( false == reader->parse(responseBody.c_str(), responseBody.c_str() + responseBody.size(), &root, &err) )
-	{
+	bool bParseResult = reader->parse(responseBody.c_str(), responseBody.c_str() + responseBody.size(), &root, &err);
+	if ( !reader )
 		delete reader;
+
+	if ( false == bParseResult )
+	{
 		fprintf(stderr, "json parse failed \n");
 		response.errorType = JSON_PARSING_ERROR_TYPE;
 		response.errorMessage = JSON_PARSING_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
 		return response;
 	}
-	delete reader;
 
 	int totalCount = root["hits"]["total"]["value"].asInt();
 	double maxScore = root["hits"]["max_score"].asDouble();
@@ -75,7 +77,7 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 
 	fprintf(stderr, "totalCount : %d , maxScore : %lf \n", totalCount, maxScore);
 	fprintf(stderr, "hits : %s \n", hits.c_str());
-	fprintf(stderr, "query Result \n\n %s \n\n", responseBody.c_str());
+	// fprintf(stderr, "query Result \n\n %s \n\n", responseBody.c_str());
 
 	return response;
 }
