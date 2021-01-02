@@ -26,6 +26,7 @@ class EsDocument
 		Response create(std::string index, std::string query, std::string docId = "");
 		Response update(std::string index, std::string query, std::string docId);
 		Response get(DocResult& docResult, std::string index, std::string docId);
+		Response exists(std::string index, std::string docId);
 
 	private:
 		std::string _host;

@@ -205,3 +205,32 @@ Response EsDocument::get(DocResult& docResult, std::string index, std::string do
 
 	return response;
 }
+
+Response EsDocument::exists(std::string index, std::string docId)
+{
+	Response response;
+
+	// HTTP Request
+	HttpUtil httpUtil;
+	std::map<std::string, std::string> headers;
+	std::string responseBody;
+	long responseCode;
+	char requestUrl[500];
+	sprintf(requestUrl, "%s:%d/%s%s/%s", _host.c_str(), _port, index.c_str(), DOCUMENT_QUERY, docId.c_str());
+
+	if ( false == httpUtil.sendHttpRequest(requestUrl, HTTP_HEAD_METHOD, headers,
+				_timeout, responseBody, responseCode) )
+	{
+		fprintf(stderr, "%s\n", responseBody.c_str());
+		response.errorType = HTTP_REQUEST_ERROR_TYPE;
+		response.errorMessage = HTTP_REQUEST_ERROR;
+		response.statusCode = SERVER_INTERNAL_ERROR;
+		return response;
+	}
+	
+	response.errorType = SUCCESS_TYPE;
+	response.errorMessage = SUCCESS;
+	response.statusCode = HTTP_SUCCESS;
+
+	return response;
+}
