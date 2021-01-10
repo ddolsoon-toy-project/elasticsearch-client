@@ -19,7 +19,12 @@ QueryMapper::~QueryMapper()
 bool QueryMapper::initialize(std::string queryPath)
 {	
 	XMLDocument doc;
-	doc.LoadFile( queryPath.c_str() );
+	if ( doc.LoadFile(queryPath.c_str()) != XML_SUCCESS )
+	{
+		fprintf(stderr, "queryPath is invalid (%s) \n", queryPath.c_str());
+		return false;
+	}
+
 	XMLElement* rootElement = doc.RootElement();
 	XMLElement* querymapElement = rootElement->FirstChildElement("querymap");
 
