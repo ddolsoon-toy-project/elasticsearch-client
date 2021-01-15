@@ -66,6 +66,11 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 	writeBuilder["indentation"] = "";
 
 	std::string hits = Json::writeString(writeBuilder, root["hits"]["hits"]);
+	std::string aggs = "";
+	if ( root.isMember("aggregations") )
+	{
+		aggs = Json::writeString(writeBuilder, root["aggregations"]);
+	}
 
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
@@ -74,6 +79,7 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 	searchResult.totalCount = totalCount;
 	searchResult.maxScore = maxScore;
 	searchResult.hits = hits;
+	searchResult.aggs = aggs;
 
 	fprintf(stderr, "totalCount : %d , maxScore : %lf \n", totalCount, maxScore);
 	fprintf(stderr, "hits : %s \n", hits.c_str());

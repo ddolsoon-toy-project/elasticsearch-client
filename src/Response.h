@@ -43,6 +43,7 @@ typedef struct _SearchResult
 	int totalCount;
 	double maxScore;
 	std::string hits;
+	std::string aggs;
 }SearchResult;
 
 typedef struct _DocResult 
