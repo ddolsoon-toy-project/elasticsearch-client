@@ -1,4 +1,18 @@
 <querymaps>
+<querymap name="CreatePushDeviceInfo">
+<param name="channel" type="String"/>
+<param name="deviceToken" type="String"/>
+<param name="pushYn" type="String"/>
+<query>
+<![CDATA[
+{
+  "device_token" : :deviceToken,
+  "channel" : :channel,
+  "push_yn" : :pushYn
+}
+]]>
+</query>
+</querymap>
 <querymap name="SearchNearestPharmacyFromDistance">
 <param name="distance" type="String"/>
 <param name="latitude" type="Double"/>
@@ -31,4 +45,68 @@
 ]]>
 </query>
 </querymap>
+<querymap name="CreateDdolsoonDoc">
+<query>
+<![CDATA[
+{
+	"name" : "ddolsoon",
+	"age" : 29
+} 
+]]>
+</query>
+</querymap>
+<querymap name="UpdateDdolsoonDoc">
+<query>
+<![CDATA[
+{
+	"name" : "ddolsoon2"
+} 
+]]>
+</query>
+</querymap>
+<querymap name="DeleteDdolsoonDoc">
+<query>
+<![CDATA[
+{
+  "query" : {
+    "term" : {
+      "name" : "ddolsoon2"
+    }
+  }
+}
+]]>
+</query>
+</querymap>
+<querymap name="GetPharmacyCountGroupByAddress">
+<param name="distance" type="String"/>
+<param name="latitude" type="Double"/>
+<param name="longitude" type="Double"/>
+<param name="type" type="String"/>
+<param name="limit" type="Int"/>
+<query>
+<![CDATA[
+{
+  "query": {
+    "geo_distance": {
+      "distance": :distance,
+      "location": {
+        "lat": :latitude,
+        "lon": :longitude 
+      }
+    }
+  },
+  "aggs": {
+    "aggs_count": {
+      "terms": {
+        "field": :type,
+        "size" : :limit
+      }
+    }
+  },
+  "size": 0
+}
+]]>
+</query>
+</querymap>
+
 </querymaps>
