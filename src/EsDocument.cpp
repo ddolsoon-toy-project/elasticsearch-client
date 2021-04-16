@@ -129,7 +129,7 @@ Response EsDocument::update(std::string index, std::string query, std::string do
 	std::string responseBody;
 	long responseCode;
 	char requestUrl[500];
-	sprintf(requestUrl, "%s:%d/%s%s/%s", _host.c_str(), _port, index.c_str(), DOCUMENT_QUERY, docId.c_str());
+	sprintf(requestUrl, "%s:%d/%s/_update/%s", _host.c_str(), _port, index.c_str(), docId.c_str());
 	httpUtil.setRequestBody(query);
 
 	if ( false == httpUtil.sendHttpRequest(requestUrl, HTTP_POST_METHOD, headers,
