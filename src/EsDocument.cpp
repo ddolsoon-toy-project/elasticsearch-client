@@ -37,12 +37,14 @@ Response EsDocument::deleteById(std::string index, std::string docId)
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 	
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 
 	return response;
 }
@@ -67,12 +69,14 @@ Response EsDocument::deleteByQuery(std::string index, std::string query)
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 
 	return response;
 }
@@ -108,12 +112,14 @@ Response EsDocument::create(std::string index, std::string query, std::string do
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 
 	return response;
 }
@@ -138,12 +144,14 @@ Response EsDocument::update(std::string index, std::string query, std::string do
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 
 	return response;
 }
@@ -166,6 +174,7 @@ Response EsDocument::get(DocResult& docResult, std::string index, std::string do
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 	
@@ -185,6 +194,7 @@ Response EsDocument::get(DocResult& docResult, std::string index, std::string do
 		response.errorType = JSON_PARSING_ERROR_TYPE;
 		response.errorMessage = JSON_PARSING_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 
@@ -202,6 +212,7 @@ Response EsDocument::get(DocResult& docResult, std::string index, std::string do
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 
 	return response;
 }
@@ -225,12 +236,14 @@ Response EsDocument::exists(std::string index, std::string docId)
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 	
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 
 	return response;
 }

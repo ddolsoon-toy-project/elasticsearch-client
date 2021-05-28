@@ -37,6 +37,7 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 
@@ -56,6 +57,7 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 		response.errorType = JSON_PARSING_ERROR_TYPE;
 		response.errorMessage = JSON_PARSING_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 
@@ -63,7 +65,7 @@ Response EsSearch::search(SearchResult& searchResult, std::string index, std::st
 	double maxScore = root["hits"]["max_score"].asDouble();
 
 	Json::StreamWriterBuilder writeBuilder;
-	writeBuilder["indentation"] = "";
+	writeBuilder["emitUTF8"] = true;
 
 	std::string hits = Json::writeString(writeBuilder, root["hits"]["hits"]);
 	std::string aggs = "";

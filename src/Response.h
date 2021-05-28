@@ -36,6 +36,7 @@ typedef struct _Response
 	std::string errorType;
 	std::string errorMessage;
 	int statusCode;
+	std::string body;
 }Response;
 
 typedef struct _SearchResult

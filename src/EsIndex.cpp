@@ -37,12 +37,14 @@ Response EsIndex::deleteIndex(std::string index)
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 	
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 	
 	return response;
 }
@@ -68,12 +70,14 @@ Response EsIndex::createIndex(std::string index, std::string mappings)
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 	
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 	
 	return response;
 }
@@ -97,12 +101,14 @@ Response EsIndex::existsIndex(std::string index)
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 	
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 
 
 	return response;

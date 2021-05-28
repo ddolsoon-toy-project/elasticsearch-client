@@ -188,12 +188,14 @@ Response EsBulkProcessor::run()
 		response.errorType = HTTP_REQUEST_ERROR_TYPE;
 		response.errorMessage = HTTP_REQUEST_ERROR;
 		response.statusCode = SERVER_INTERNAL_ERROR;
+		response.body = responseBody;
 		return response;
 	}
 
 	response.errorType = SUCCESS_TYPE;
 	response.errorMessage = SUCCESS;
 	response.statusCode = HTTP_SUCCESS;
+	response.body = responseBody;
 
 	_bulkDatas.clear();
 	_bulkDataSize = 0LL;

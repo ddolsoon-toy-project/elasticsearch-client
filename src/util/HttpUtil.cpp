@@ -105,7 +105,7 @@ bool HttpUtil::sendHttpRequest(const std::string& url, std::string method,
 		curl_easy_getinfo(curlCtx, CURLINFO_RESPONSE_CODE, &responseCode);
 		if ( responseCode < 200 || responseCode > 299 )
 		{
-			fprintf(stderr, "http responseCode is not 2xx (%ld) \n", responseCode);
+			fprintf(stderr, "http responseCode is not 2xx (%ld|%s) \n", responseCode, response.c_str());
 			bResult = false;
 			break;
 		}

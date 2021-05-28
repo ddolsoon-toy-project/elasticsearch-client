@@ -8,7 +8,6 @@ int main (void)
 {
 	EsClient esClient("127.0.0.1", 6200, 3000, "test.xml");
 
-	/*
 	std::map<std::string, boost::variant<int, double, std::string>> inputParamMap;
 	inputParamMap["distance"] = "5km";
 	inputParamMap["latitude"] = 37.5358;
@@ -16,8 +15,9 @@ int main (void)
 
 	SearchResult searchResult;
 	Response response = esClient.searchQuery(searchResult, "pet_pharmacy", "SearchNearestPharmacyFromDistance", inputParamMap);
-	//printf("SearchNearestPharmacyFromDistance : \n%s\n", resultQuery.c_str());
+	printf("SearchNearestPharmacyFromDistance : \n%s\n", response.body.c_str());
 
+	/*
 
 	std::map<std::string, boost::variant<int, double, std::string>> inputParamMap2;
 	inputParamMap2["name"] = "한겨례";
